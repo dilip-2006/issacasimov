@@ -132,40 +132,42 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        className="flex flex-col sm:flex-row gap-3 sm:gap-4"
       >
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-peacock-400 w-5 h-5" />
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-peacock-400 w-4 h-4 sm:w-5 sm:h-5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search requests..."
-            className="w-full pl-10 pr-4 py-3 bg-dark-700/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:border-peacock-500 focus:ring-2 focus:ring-peacock-500/20 transition-all duration-200"
+            className="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-dark-700/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:border-peacock-500 focus:ring-2 focus:ring-peacock-500/20 transition-all duration-200 text-sm sm:text-base"
           />
         </div>
         
-        <div className="flex flex-wrap gap-2 bg-dark-800/30 p-2 rounded-xl">
+        <div className="flex flex-wrap gap-1 sm:gap-2 bg-dark-800/30 p-2 rounded-xl">
           {['all', 'pending', 'approved', 'rejected'].map((filterOption) => (
             <motion.button
               key={filterOption}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setFilter(filterOption as any)}
-              className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 capitalize ${
+              className={`flex-1 px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 capitalize text-xs sm:text-sm ${
                 filter === filterOption
                   ? 'bg-peacock-500 text-white shadow-lg'
                   : 'text-peacock-300 hover:text-white hover:bg-dark-700/50'
               }`}
             >
-              {filterOption} ({requests.filter(r => filterOption === 'all' || r.status === filterOption).length})
+              <span className="hidden sm:inline">{filterOption}</span>
+              <span className="sm:hidden">{filterOption.slice(0, 3)}</span>
+              <span> ({requests.filter(r => filterOption === 'all' || r.status === filterOption).length})</span>
             </motion.button>
           ))}
         </div>
       </motion.div>
 
       {/* Requests List */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <AnimatePresence>
           {filteredRequests.map((request, index) => (
             <motion.div
@@ -175,60 +177,60 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.01, y: -2 }}
-              className="relative overflow-hidden bg-dark-800/50 backdrop-blur-xl rounded-2xl border border-peacock-500/20 p-6 hover:border-peacock-500/40 transition-all duration-300"
+              className="relative overflow-hidden bg-dark-800/50 backdrop-blur-xl rounded-xl sm:rounded-2xl border border-peacock-500/20 p-4 sm:p-6 hover:border-peacock-500/40 transition-all duration-300"
             >
               {/* Priority Indicator */}
               {request.status === 'pending' && (
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-500"></div>
               )}
 
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6">
                 <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-peacock-500/20 rounded-xl">
-                      <Package className="w-6 h-6 text-peacock-400" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                    <div className="p-2 sm:p-3 bg-peacock-500/20 rounded-lg sm:rounded-xl">
+                      <Package className="w-5 h-5 sm:w-6 sm:h-6 text-peacock-400" />
                     </div>
                     <div>
-                      <h3 className="text-white font-bold text-xl">{request.componentName}</h3>
-                      <p className="text-peacock-300">Quantity: {request.quantity}</p>
+                      <h3 className="text-white font-bold text-lg sm:text-xl">{request.componentName}</h3>
+                      <p className="text-peacock-300 text-sm">Quantity: {request.quantity}</p>
                     </div>
                     {isOverdue(request.dueDate, request.status) && (
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="flex items-center gap-1 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full text-red-400 text-sm font-medium"
+                        className="flex items-center gap-1 bg-red-500/10 border border-red-500/20 px-2 sm:px-3 py-1 rounded-full text-red-400 text-xs sm:text-sm font-medium"
                       >
-                        <AlertTriangle className="w-4 h-4" />
+                        <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4" />
                         Overdue
                       </motion.div>
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                    <div className="flex items-center gap-3">
-                      <User className="w-4 h-4 text-peacock-400" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs sm:text-sm">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <User className="w-3 h-3 sm:w-4 sm:h-4 text-peacock-400" />
                       <div>
                         <p className="text-peacock-300">Student</p>
                         <p className="text-white font-semibold">{request.studentName}</p>
-                        <p className="text-peacock-300 text-xs">Roll: {request.rollNo}</p>
+                        <p className="text-peacock-300 text-xs sm:text-xs">Roll: {request.rollNo}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Phone className="w-4 h-4 text-peacock-400" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-peacock-400" />
                       <div>
                         <p className="text-peacock-300">Mobile</p>
                         <p className="text-white">{request.mobile}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-peacock-400" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-peacock-400" />
                       <div>
                         <p className="text-peacock-300">Request Date</p>
                         <p className="text-white">{new Date(request.requestDate).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-peacock-400" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-peacock-400" />
                       <div>
                         <p className="text-peacock-300">Due Date</p>
                         <p className={`font-semibold ${isOverdue(request.dueDate, request.status) ? 'text-red-400' : 'text-white'}`}>
@@ -239,21 +241,21 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
                   </div>
                 </div>
 
-                <div className="flex flex-col items-end gap-3">
-                  <div className={`px-4 py-2 rounded-full border text-sm font-semibold ${getStatusColor(request.status)}`}>
+                <div className="flex flex-col sm:items-end gap-2 sm:gap-3">
+                  <div className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full border text-xs sm:text-sm font-semibold ${getStatusColor(request.status)}`}>
                     {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
                   </div>
 
                   {request.status === 'pending' && (
-                    <div className="flex gap-3">
+                    <div className="flex gap-2 sm:gap-3">
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleApprove(request)}
-                        className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-4 py-2 rounded-xl font-semibold shadow-lg transition-all duration-300"
+                        className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-semibold shadow-lg transition-all duration-300 text-xs sm:text-sm"
                       >
-                        <div className="relative z-10 flex items-center gap-2">
-                          <Check className="w-4 h-4" />
+                        <div className="relative z-10 flex items-center gap-1 sm:gap-2">
+                          <Check className="w-3 h-3 sm:w-4 sm:h-4" />
                           Approve
                         </div>
                       </motion.button>
@@ -264,10 +266,10 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
                           const reason = prompt('Reason for rejection:');
                           if (reason) handleReject(request, reason);
                         }}
-                        className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-xl font-semibold shadow-lg transition-all duration-300"
+                        className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-semibold shadow-lg transition-all duration-300 text-xs sm:text-sm"
                       >
-                        <div className="relative z-10 flex items-center gap-2">
-                          <X className="w-4 h-4" />
+                        <div className="relative z-10 flex items-center gap-1 sm:gap-2">
+                          <X className="w-3 h-3 sm:w-4 sm:h-4" />
                           Reject
                         </div>
                       </motion.button>
@@ -280,10 +282,10 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl"
+                  className="mt-3 sm:mt-4 p-3 sm:p-4 bg-red-500/10 border border-red-500/20 rounded-xl"
                 >
-                  <p className="text-red-400 font-medium">Rejection Reason:</p>
-                  <p className="text-red-300 text-sm mt-1">{request.notes}</p>
+                  <p className="text-red-400 font-medium text-sm sm:text-base">Rejection Reason:</p>
+                  <p className="text-red-300 text-xs sm:text-sm mt-1">{request.notes}</p>
                 </motion.div>
               )}
             </motion.div>

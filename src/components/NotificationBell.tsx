@@ -58,14 +58,14 @@ const NotificationBell: React.FC = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-peacock-300 hover:text-peacock-200 transition-colors"
+        className="relative p-1.5 sm:p-2 text-peacock-300 hover:text-peacock-200 transition-colors"
       >
-        <Bell className="w-6 h-6" />
+        <Bell className="w-5 h-5 sm:w-6 sm:h-6" />
         {unreadCount > 0 && (
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+            className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center font-bold"
           >
             {unreadCount > 9 ? '9+' : unreadCount}
           </motion.div>
@@ -79,31 +79,31 @@ const NotificationBell: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-full mt-2 w-80 bg-dark-800 border border-dark-600 rounded-lg shadow-xl z-50 max-h-96 overflow-hidden"
+            className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-dark-800 border border-dark-600 rounded-lg shadow-xl z-50 max-h-96 overflow-hidden"
           >
-            <div className="p-4 border-b border-dark-600 flex items-center justify-between">
-              <h3 className="text-white font-semibold">Notifications</h3>
+            <div className="p-3 sm:p-4 border-b border-dark-600 flex items-center justify-between">
+              <h3 className="text-white font-semibold text-sm sm:text-base">Notifications</h3>
               <div className="flex items-center gap-2">
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-peacock-400 hover:text-peacock-300 text-sm"
+                    className="text-peacock-400 hover:text-peacock-300 text-xs sm:text-sm"
                   >
                     Mark all read
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-dark-400 hover:text-white"
+                  className="text-dark-400 hover:text-white p-1"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3 h-3 sm:w-4 sm:h-4" />
                 </button>
               </div>
             </div>
             
             <div className="max-h-64 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-4 text-center text-dark-400">
+                <div className="p-3 sm:p-4 text-center text-dark-400 text-sm">
                   No notifications yet
                 </div>
               ) : (
@@ -115,25 +115,28 @@ const NotificationBell: React.FC = () => {
                     className={`p-4 border-b border-dark-700 last:border-b-0 cursor-pointer hover:bg-dark-700/50 transition-colors ${
                       !notification.read ? 'bg-peacock-500/5' : ''
                     }`}
+                    className={`p-3 sm:p-4 border-b border-dark-700 last:border-b-0 cursor-pointer hover:bg-dark-700/50 transition-colors ${
+                      !notification.read ? 'bg-peacock-500/5' : ''
+                    }`}
                     onClick={() => !notification.read && markAsRead(notification.id)}
                   >
-                    <div className="flex items-start gap-3">
-                      <span className="text-lg">
+                    <div className="flex items-start gap-2 sm:gap-3">
+                      <span className="text-base sm:text-lg">
                         {getNotificationIcon(notification.type)}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-white font-medium text-sm truncate">
+                        <div className="flex items-center gap-1 sm:gap-2">
+                          <h4 className="text-white font-medium text-xs sm:text-sm truncate">
                             {notification.title}
                           </h4>
                           {!notification.read && (
-                            <div className="w-2 h-2 bg-peacock-500 rounded-full flex-shrink-0"></div>
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-peacock-500 rounded-full flex-shrink-0"></div>
                           )}
                         </div>
-                        <p className="text-dark-300 text-sm mt-1 line-clamp-2">
+                        <p className="text-dark-300 text-xs sm:text-sm mt-1 line-clamp-2">
                           {notification.message}
                         </p>
-                        <p className="text-dark-500 text-xs mt-2">
+                        <p className="text-dark-500 text-xs mt-1 sm:mt-2">
                           {new Date(notification.createdAt).toLocaleString()}
                         </p>
                       </div>

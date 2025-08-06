@@ -100,7 +100,7 @@ const AdminDashboard: React.FC = () => {
       </motion.div>
 
       {/* Enhanced Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {[
           { 
             title: 'Total Users', 
@@ -147,13 +147,13 @@ const AdminDashboard: React.FC = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02, y: -5 }}
-              className={`relative overflow-hidden ${stat.bgColor} backdrop-blur-xl rounded-2xl border ${stat.borderColor} p-6 group hover:shadow-2xl transition-all duration-300`}
+              className={`relative overflow-hidden ${stat.bgColor} backdrop-blur-xl rounded-xl sm:rounded-2xl border ${stat.borderColor} p-3 sm:p-6 group hover:shadow-2xl transition-all duration-300`}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 bg-gradient-to-br ${stat.color} rounded-xl shadow-lg group-hover:animate-pulse`}>
-                    <Icon className="w-6 h-6 text-white" />
+                <div className="flex items-center justify-between mb-2 sm:mb-4">
+                  <div className={`p-2 sm:p-3 bg-gradient-to-br ${stat.color} rounded-lg sm:rounded-xl shadow-lg group-hover:animate-pulse`}>
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <motion.div
                     initial={{ scale: 0 }}
@@ -161,11 +161,11 @@ const AdminDashboard: React.FC = () => {
                     transition={{ delay: index * 0.1 + 0.3 }}
                     className="text-right"
                   >
-                    <p className="text-3xl font-bold text-white">{stat.value}</p>
-                    <p className="text-peacock-300 text-sm">{stat.subtitle}</p>
+                    <p className="text-lg sm:text-3xl font-bold text-white">{stat.value}</p>
+                    <p className="text-peacock-300 text-xs sm:text-sm">{stat.subtitle}</p>
                   </motion.div>
                 </div>
-                <h3 className="text-peacock-200 font-medium">{stat.title}</h3>
+                <h3 className="text-peacock-200 font-medium text-xs sm:text-base">{stat.title}</h3>
               </div>
             </motion.div>
           );
@@ -179,39 +179,39 @@ const AdminDashboard: React.FC = () => {
         transition={{ delay: 0.6 }}
         className="bg-gradient-to-r from-dark-800/50 to-dark-700/50 backdrop-blur-xl rounded-2xl border border-peacock-500/20 p-6"
       >
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h3 className="text-xl font-bold text-white mb-2">📊 Professional Excel Reports</h3>
-            <p className="text-peacock-300">Generate comprehensive Excel reports with detailed analytics and professional formatting</p>
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">📊 Professional Excel Reports</h3>
+            <p className="text-peacock-300 text-sm sm:text-base">Generate comprehensive Excel reports with detailed analytics and professional formatting</p>
           </div>
-          <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl">
-            <FileSpreadsheet className="w-6 h-6 text-white" />
+          <div className="p-2 sm:p-3 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl">
+            <FileSpreadsheet className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="space-y-4">
           <motion.button
             whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(0, 206, 209, 0.3)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowExportPreview(true)}
-            className="group relative overflow-hidden bg-gradient-to-r from-peacock-500 to-blue-500 text-white p-6 rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300"
+            className="group relative overflow-hidden bg-gradient-to-r from-peacock-500 to-blue-500 text-white p-4 sm:p-6 rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 w-full"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-peacock-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-2">
-                <Eye className="w-6 h-6 group-hover:animate-bounce" />
-                <span className="text-lg">Preview & Export Professional Excel Report</span>
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <Eye className="w-5 h-5 sm:w-6 sm:h-6 group-hover:animate-bounce" />
+                <span className="text-sm sm:text-lg">Preview & Export Professional Excel Report</span>
               </div>
-              <p className="text-peacock-100 text-sm opacity-90">
+              <p className="text-peacock-100 text-xs sm:text-sm opacity-90">
                 Comprehensive Excel workbook with multiple sheets, professional formatting, charts, and detailed component analysis
               </p>
             </div>
           </motion.button>
         </div>
 
-        <div className="mt-4 p-4 bg-dark-700/30 rounded-xl border border-dark-600">
-          <h4 className="text-peacock-400 font-semibold mb-2">📋 Professional Excel Report Features:</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-peacock-300">
+        <div className="mt-4 p-3 sm:p-4 bg-dark-700/30 rounded-xl border border-dark-600">
+          <h4 className="text-peacock-400 font-semibold mb-2 text-sm sm:text-base">📋 Professional Excel Report Features:</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-peacock-300">
             <ul className="space-y-1">
               <li>• Executive Summary Dashboard with KPIs</li>
               <li>• Detailed Component Inventory Analysis</li>
@@ -236,12 +236,12 @@ const AdminDashboard: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-peacock-200 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-white to-peacock-200 bg-clip-text text-transparent mb-2">
             Admin Dashboard
           </h1>
-          <p className="text-peacock-300 text-lg">Manage lab components and monitor student activity with precision</p>
+          <p className="text-peacock-300 text-sm sm:text-lg">Manage lab components and monitor student activity with precision</p>
         </motion.div>
 
         {/* Enhanced Tab Navigation */}
@@ -249,9 +249,9 @@ const AdminDashboard: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <div className="flex flex-wrap gap-3 bg-dark-800/50 p-3 rounded-2xl backdrop-blur-xl border border-dark-700">
+          <div className="flex flex-wrap gap-2 sm:gap-3 bg-dark-800/50 p-2 sm:p-3 rounded-2xl backdrop-blur-xl border border-dark-700">
             {tabs.map((tab, index) => {
               const Icon = tab.icon;
               return (
@@ -260,7 +260,7 @@ const AdminDashboard: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative overflow-hidden flex items-center gap-3 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`relative overflow-hidden flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base ${
                     activeTab === tab.id
                       ? `bg-gradient-to-r ${tab.color} text-white shadow-lg`
                       : 'text-peacock-300 hover:text-white hover:bg-dark-700/70'
@@ -276,7 +276,7 @@ const AdminDashboard: React.FC = () => {
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
-                  <Icon className="w-5 h-5 relative z-10" />
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
                   <span className="hidden sm:inline relative z-10">{tab.label}</span>
                 </motion.button>
               );

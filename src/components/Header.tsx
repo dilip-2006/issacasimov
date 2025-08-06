@@ -42,18 +42,18 @@ const Header: React.FC = () => {
       className="bg-dark-800/95 backdrop-blur-lg border-b border-dark-700/50 sticky top-0 z-40 shadow-lg"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 min-h-[64px]">
           <div className="flex items-center gap-3">
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 5 }}
-              className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-peacock-500 to-blue-500 rounded-lg shadow-lg"
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-peacock-500 to-blue-500 rounded-lg shadow-lg"
             >
-              <Cpu className="w-6 h-6 text-white" />
+              <Cpu className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </motion.div>
             <div>
-              <h1 className="text-white font-bold text-lg">Isaac Asimov Lab</h1>
+              <h1 className="text-white font-bold text-sm sm:text-lg">Isaac Asimov Lab</h1>
               <div className="flex items-center gap-2">
-                <p className="text-peacock-300 text-sm">
+                <p className="text-peacock-300 text-xs sm:text-sm">
                   {user.role === 'admin' ? 'Admin Dashboard' : 'Student Portal'}
                 </p>
                 {/* Network Status Indicator */}
@@ -66,8 +66,8 @@ const Header: React.FC = () => {
                       : 'bg-red-500/20 text-red-400'
                   }`}
                 >
-                  {isOnline ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
-                  {isOnline ? 'Online' : 'Offline'}
+                  {isOnline ? <Wifi className="w-2 h-2 sm:w-3 sm:h-3" /> : <WifiOff className="w-2 h-2 sm:w-3 sm:h-3" />}
+                  <span className="hidden sm:inline">{isOnline ? 'Online' : 'Offline'}</span>
                 </motion.div>
               </div>
             </div>
@@ -92,11 +92,11 @@ const Header: React.FC = () => {
 
             <NotificationBell />
             
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-white font-medium">{user.name}</p>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="text-right hidden sm:block">
+                <p className="text-white font-medium text-sm">{user.name}</p>
                 <div className="flex items-center gap-2">
-                  <p className="text-peacock-300 text-sm">{user.email}</p>
+                  <p className="text-peacock-300 text-xs">{user.email}</p>
                   {user.isActive && (
                     <motion.div 
                       animate={{ scale: [1, 1.2, 1] }}
@@ -111,10 +111,10 @@ const Header: React.FC = () => {
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={logout}
-                className="p-2 text-peacock-300 hover:text-peacock-200 hover:bg-dark-700/70 rounded-lg transition-all duration-200 group"
+                className="p-1.5 sm:p-2 text-peacock-300 hover:text-peacock-200 hover:bg-dark-700/70 rounded-lg transition-all duration-200 group"
                 title="Logout"
               >
-                <LogOut className="w-5 h-5 group-hover:animate-pulse" />
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5 group-hover:animate-pulse" />
               </motion.button>
             </div>
           </div>

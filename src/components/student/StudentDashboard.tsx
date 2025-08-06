@@ -37,10 +37,10 @@ const StudentDashboard: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Student Dashboard</h1>
-          <p className="text-peacock-300">Manage your component borrowing and returns</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Student Dashboard</h1>
+          <p className="text-peacock-300 text-sm sm:text-base">Manage your component borrowing and returns</p>
         </motion.div>
 
         {/* Tab Navigation */}
@@ -48,9 +48,9 @@ const StudentDashboard: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <div className="flex flex-wrap gap-2 bg-dark-800/50 p-2 rounded-xl backdrop-blur-sm">
+          <div className="flex flex-wrap gap-1 sm:gap-2 bg-dark-800/50 p-2 rounded-xl backdrop-blur-sm">
             {tabs.map((tab, index) => {
               const Icon = tab.icon;
               return (
@@ -59,7 +59,7 @@ const StudentDashboard: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm ${
                     activeTab === tab.id
                       ? 'bg-gradient-to-r from-peacock-500 to-blue-500 text-white shadow-lg'
                       : 'text-peacock-300 hover:text-white hover:bg-dark-700/50'
@@ -68,8 +68,9 @@ const StudentDashboard: React.FC = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden text-xs">{tab.label.split(' ')[0]}</span>
                 </motion.button>
               );
             })}

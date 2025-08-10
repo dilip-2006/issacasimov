@@ -1,8 +1,6 @@
 import React from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginForm from './components/LoginForm';
 import Header from './components/Header';
-import StudentDashboard from './components/student/StudentDashboard';
 import AdminDashboard from './components/admin/AdminDashboard';
 
 const AppContent: React.FC = () => {
@@ -16,14 +14,10 @@ const AppContent: React.FC = () => {
     );
   }
 
-  if (!user) {
-    return <LoginForm />;
-  }
-
   return (
     <div className="min-h-screen bg-dark-950">
-      <Header />
-      {user.role === 'admin' ? <AdminDashboard /> : <StudentDashboard />}
+      {user && <Header />}
+      <AdminDashboard />
     </div>
   );
 };

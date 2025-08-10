@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Users } from 'lucide-react';
+import { LogOut, Cpu, Users, Wifi, WifiOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { dataService } from '../services/dataService';
+import NotificationBell from './NotificationBell';
 
 const Header: React.FC = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [onlineCount, setOnlineCount] = useState(0);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
     const updateOnlineCount = () => {
@@ -17,10 +19,21 @@ const Header: React.FC = () => {
     updateOnlineCount();
     const interval = setInterval(updateOnlineCount, 30000); // Update every 30 seconds
     
+    // Network status listeners
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
     return () => {
       clearInterval(interval);
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  if (!user) return null;
 
   return (
     <motion.header
@@ -39,46 +52,71 @@ const Header: React.FC = () => {
             </motion.div>
             <div>
               <h1 className="text-white font-bold text-sm sm:text-lg">Isaac Asimov Lab</h1>
-              <p className="text-peacock-300 text-xs sm:text-sm">Staff Management System</p>
+              <div className="flex items-center gap-2">
+                <p className="text-peacock-300 text-xs sm:text-sm">
+                  {user.role === 'admin' ? 'Admin Dashboard' : 'Student Portal'}
+                </p>
+                {/* Network Status Indicator */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs ${
+                    isOnline 
+                      ? 'bg-green-500/20 text-green-400' 
+                      : 'bg-red-500/20 text-red-400'
+                  }`}
+                >
+                  {isOnline ? <Wifi className="w-2 h-2 sm:w-3 sm:h-3" /> : <WifiOff className="w-2 h-2 sm:w-3 sm:h-3" />}
+                  <span className="hidden sm:inline">{isOnline ? 'Online' : 'Offline'}</span>
+                </motion.div>
+              </div>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             {/* Online Users Count */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 px-3 py-2 rounded-full backdrop-blur-sm"
-            >
-              <Users className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 text-sm font-medium">
-                Lab Management
-              </span>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            </motion.div>
-            
-            {user && (
-              <div className="text-right">
-                <p className="text-white font-medium text-sm">{user.name}</p>
-                <p className="text-peacock-300 text-xs">Staff Member</p>
-              </div>
-            )}
-            
-            {!user && (
-              <motion.button
+            {user.role === 'admin' && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  // Simple login for staff
-                  const { login } = useAuth();
-                  login('admin@issacasimov.in', 'ralab');
-                }}
-                className="bg-gradient-to-r from-peacock-500 to-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:from-peacock-600 hover:to-blue-600 transition-all duration-200"
+                className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 px-3 py-2 rounded-full backdrop-blur-sm"
               >
-                Staff Login
-              </motion.button>
+                <Users className="w-4 h-4 text-green-400" />
+                <span className="text-green-400 text-sm font-medium">
+                  {onlineCount} online
+                </span>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              </motion.div>
             )}
+
+            <NotificationBell />
+            
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="text-right hidden sm:block">
+                <p className="text-white font-medium text-sm">{user.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-peacock-300 text-xs">{user.email}</p>
+                  {user.isActive && (
+                    <motion.div 
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-2 h-2 bg-green-400 rounded-full"
+                    ></motion.div>
+                  )}
+                </div>
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={logout}
+                className="p-1.5 sm:p-2 text-peacock-300 hover:text-peacock-200 hover:bg-dark-700/70 rounded-lg transition-all duration-200 group"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5 group-hover:animate-pulse" />
+              </motion.button>
+            </div>
           </div>
         </div>
       </div>
